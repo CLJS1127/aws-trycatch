@@ -440,12 +440,12 @@
             <!-- footer //-->
         </div>
     </body>
-    <script th:inline="javascript">const login = `[[${login}]]`;</script>
+    <script th:inline="javascript">const login = [[${login}]];</script>
     <script src="/js/main/log-in.js"></script>
     <script src="/js/main/footer.js"></script>
     <script>
         document.querySelector(".kakao").addEventListener("click", () => {
-            location.href = "https://kauth.kakao.com/oauth/authorize?client_id=edeefdf5ab96d36811571fbd1e56a4cf&redirect_uri=http://localhost:10000/main/kakao-join&response_type=code";
+            location.href = "https://kauth.kakao.com/oauth/authorize?client_id=edeefdf5ab96d36811571fbd1e56a4cf&redirect_uri=http://13.125.161.70/main/kakao-join&response_type=code";
         });
 
         document.querySelectorAll("#devMemTab li").forEach(tab => {
