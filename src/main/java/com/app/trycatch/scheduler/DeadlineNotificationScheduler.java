@@ -30,7 +30,6 @@ public class DeadlineNotificationScheduler {
 
     /** 매일 자정: 공고 상태 자동 전환 (모집마감 → 진행중 → 진행종료) */
     @Scheduled(cron = "0 0 0 * * *")
-    @Transactional
     public void updateProgramStatuses() {
         String today = LocalDate.now().toString();
 
