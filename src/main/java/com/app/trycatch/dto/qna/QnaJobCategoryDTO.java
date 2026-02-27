@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class QnaJobCategoryDTO {
     private Long id;
@@ -17,16 +17,18 @@ public class QnaJobCategoryDTO {
     private String jobCategoryBigName;
     private String jobCategoryBigCode;
 
-    public QnaJobCategoryVO qnaJobCategoryVO(){
+    public QnaJobCategoryVO qnaJobCategoryVO() {
         return QnaJobCategoryVO.builder()
                 .id(id)
                 .jobCategoryName(jobCategoryName)
                 .jobCategoryCode(jobCategoryCode)
                 .jobCategoryBigId(jobCategoryBigId)
                 .build();
-    };
+    }
 
-    public QnaJobCategoryBigVO  qnaJobCategoryBigVO(){
+    ;
+
+    public QnaJobCategoryBigVO qnaJobCategoryBigVO() {
         return QnaJobCategoryBigVO.builder()
                 .jobCategoryBigName(jobCategoryBigName)
                 .jobCategoryBigCode(jobCategoryBigCode)

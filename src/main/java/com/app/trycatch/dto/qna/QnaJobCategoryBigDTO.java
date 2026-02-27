@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class QnaJobCategoryBigDTO {
     private Long id;

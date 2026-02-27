@@ -59,7 +59,7 @@ public class QnaService {
                 qnaMapper.updateFileId(qnaVO.getId(), fileDTO.getId());
                 firstFile = false;
             }
-            File dir = new File("C:/file/" + todayPath);
+            File dir = new File("home/ubuntu/upload//" + todayPath);
             if (!dir.exists()) dir.mkdirs();
             try {
                 file.transferTo(new File(dir, fileDTO.getFileName()));
@@ -146,7 +146,7 @@ public class QnaService {
             );
             fileDAO.save(fileDTO);
             qnaFileDAO.save(fileDTO.getId(), qnaVO.getId());
-            File dir = new File("C:/file/" + todayPath);
+            File dir = new File("home/ubuntu/upload//" + todayPath);
             if (!dir.exists()) dir.mkdirs();
             try {
                 file.transferTo(new File(dir, fileDTO.getFileName()));

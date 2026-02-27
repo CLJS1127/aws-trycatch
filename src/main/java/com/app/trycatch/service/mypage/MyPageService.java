@@ -94,7 +94,7 @@ public class MyPageService {
             return null;
         }
         String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String rootPath = "C:/file/";
+        String rootPath = "/home/ubuntu/upload";
         String path = rootPath + todayPath;
 
         String uuid = UUID.randomUUID().toString();

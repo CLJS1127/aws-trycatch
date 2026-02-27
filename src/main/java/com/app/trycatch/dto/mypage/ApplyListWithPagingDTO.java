@@ -8,7 +8,8 @@ import lombok.ToString;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 public class ApplyListWithPagingDTO {

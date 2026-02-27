@@ -5,7 +5,9 @@ import com.app.trycatch.domain.file.FileVO;
 import com.app.trycatch.domain.skilllog.SkillLogCommentFileVO;
 import lombok.*;
 
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class SkillLogCommentFileDTO {

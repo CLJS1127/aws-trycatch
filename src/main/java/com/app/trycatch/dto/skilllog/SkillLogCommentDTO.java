@@ -9,10 +9,12 @@ import lombok.experimental.SuperBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class SkillLogCommentDTO{
+public class SkillLogCommentDTO {
     private Long id;
     private Long skillLogId;
     private Long skillLogCommentParentId;
@@ -20,14 +22,14 @@ public class SkillLogCommentDTO{
     private String createdDatetime;
     private String updatedDatetime;
 
-//    답글 수
+    //    답글 수
     private int skillLogCommentChildCount;
 
-//    좋아요
+    //    좋아요
     private int likeCount;
     private boolean liked;
 
-//    file
+    //    file
     private Long fileId;
     private String filePath;
     private String fileName;
@@ -37,7 +39,7 @@ public class SkillLogCommentDTO{
 
     private Long fileIdToDelete;
 
-//    member
+    //    member
     private Long memberId;
     private String memberName;
     private int individualMemberLevel;

@@ -10,11 +10,13 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class SkillLogDTO {
-//    skillLog
+    //    skillLog
     private Long id;
     private String skillLogTitle;
     private String skillLogContent;
@@ -23,18 +25,18 @@ public class SkillLogDTO {
     private String createdDatetime;
     private String updatedDatetime;
 
-//    member
+    //    member
     private Long memberId;
     private String memberName;
 
-//    like
+    //    like
     private int likeCount;
     private boolean liked;
 
-//    댓글 수
+    //    댓글 수
     private int commentCount;
 
-//    experienceProgram
+    //    experienceProgram
     private Long experienceProgramId;
     private String experienceProgramTitle;
     // 회사명
@@ -44,11 +46,11 @@ public class SkillLogDTO {
     private String experienceProgramFileName;
     private String experienceProgramFileOriginalName;
 
-//    tag 목록
+    //    tag 목록
     private List<TagDTO> tags = new ArrayList<>();
     private String[] tagIdsToDelete;
 
-//    file 목록
+    //    file 목록
     private List<SkillLogFileDTO> skillLogFiles = new ArrayList<>();
     private String[] fileIdsToDelete;
 

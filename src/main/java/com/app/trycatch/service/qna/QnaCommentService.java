@@ -99,7 +99,7 @@ public class QnaCommentService {
             fileDAO.save(fileDTO);
             qnaCommentFileDAO.save(fileDTO.getId(), vo.getId());
 
-            File dir = new File("C:/file/" + todayPath);
+            File dir = new File("/home/ubuntu/upload/" + todayPath);
             if (!dir.exists()) dir.mkdirs();
             try {
                 file.transferTo(new File(dir, fileDTO.getFileName()));
@@ -133,7 +133,7 @@ public class QnaCommentService {
         Long fileId = qnaCommentFileDAO.findFileIdByCommentId(id);
         if (fileId != null) {
             fileDAO.findById(fileId).ifPresent(oldFile -> {
-                new File("C:/file/" + oldFile.getFilePath(), oldFile.getFileName()).delete();
+                new File("/home/ubuntu/upload/" + oldFile.getFilePath(), oldFile.getFileName()).delete();
             });
             qnaCommentFileDAO.deleteByCommentId(id);
             fileDAO.delete(fileId);
@@ -154,7 +154,7 @@ public class QnaCommentService {
             Long oldFileId = qnaCommentFileDAO.findFileIdByCommentId(id);
             if (oldFileId != null) {
                 fileDAO.findById(oldFileId).ifPresent(oldFile -> {
-                    new File("C:/file/" + oldFile.getFilePath(), oldFile.getFileName()).delete();
+                    new File("/home/ubuntu/upload/" + oldFile.getFilePath(), oldFile.getFileName()).delete();
                 });
                 qnaCommentFileDAO.deleteByCommentId(id);
                 fileDAO.delete(oldFileId);
@@ -175,7 +175,7 @@ public class QnaCommentService {
             fileDAO.save(fileDTO);
             qnaCommentFileDAO.save(fileDTO.getId(), id);
 
-            File dir = new File("C:/file/" + todayPath);
+            File dir = new File("/home/ubuntu/upload/" + todayPath);
             if (!dir.exists()) dir.mkdirs();
             try {
                 file.transferTo(new File(dir, fileDTO.getFileName()));

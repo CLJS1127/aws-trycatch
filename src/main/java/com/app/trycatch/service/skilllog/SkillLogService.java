@@ -55,7 +55,7 @@ public class SkillLogService {
 
 //    작성
     public void write(SkillLogDTO skillLogDTO, List<MultipartFile> multipartFiles) {
-        String rootPath = "C:/file/";
+        String rootPath = "home/ubuntu/upload//";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -223,7 +223,7 @@ public class SkillLogService {
 
 //    수정
     public void update(SkillLogDTO skillLogDTO, List<MultipartFile> multipartFiles) {
-        String rootPath = "C:/file/";
+        String rootPath = "home/ubuntu/upload//";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -286,7 +286,7 @@ public class SkillLogService {
 
 //    삭제
     public void delete(Long id) {
-        String rootPath = "C:/file/";
+        String rootPath = "home/ubuntu/upload//";
 
 //        태그 삭제
         tagDAO.findAllBySkillLogId(id).forEach((tagVO) -> {

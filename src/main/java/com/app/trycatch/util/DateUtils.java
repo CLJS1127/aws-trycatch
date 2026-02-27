@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
-    public static String toRelativeTime(String date){
-        if(date == null || date.isEmpty()){
+    public static String toRelativeTime(String date) {
+        if (date == null || date.isEmpty()) {
             return "";
         }
 
@@ -17,11 +17,11 @@ public class DateUtils {
         Duration duration = Duration.between(localDateTime, now);
 
         long seconds = duration.getSeconds();
-        if(seconds < 60) {
+        if (seconds < 60) {
             return "방금 전";
         }
         long minutes = seconds / 60;
-        if(minutes < 60) {
+        if (minutes < 60) {
             return minutes + "분 전";
         }
         long hours = minutes / 60;

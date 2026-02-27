@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter @ToString @NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class ApplyListDTO {
     private Long applyId;
     private Long experienceProgramId;

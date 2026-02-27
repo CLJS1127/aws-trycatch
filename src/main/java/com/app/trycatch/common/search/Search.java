@@ -14,7 +14,7 @@ public class Search {
     private String type;
     private String[] tagNames;
 
-    public int getTagNamesSize(){
+    public int getTagNamesSize() {
         return tagNames.length;
     }
 }

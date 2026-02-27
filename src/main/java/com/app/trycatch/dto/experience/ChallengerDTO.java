@@ -17,7 +17,7 @@ public class ChallengerDTO {
     private String createdDatetime;
     private String updatedDatetime;
 
-//    view_participant 조인 필드
+    //    view_participant 조인 필드
     private Long experienceProgramId;
     private Long memberId;
     private String memberName;

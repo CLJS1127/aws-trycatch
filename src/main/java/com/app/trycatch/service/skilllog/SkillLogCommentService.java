@@ -48,7 +48,7 @@ public class SkillLogCommentService {
 
     //    추가
     public void write(SkillLogCommentDTO skillLogCommentDTO, MultipartFile multipartFile){
-        String rootPath = "C:/file/";
+        String rootPath = "home/ubuntu/upload//";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -165,7 +165,7 @@ public class SkillLogCommentService {
 
     //    수정
     public void update(SkillLogCommentDTO skillLogCommentDTO, MultipartFile multipartFile){
-        String rootPath = "C:/file/";
+        String rootPath = "home/ubuntu/upload//";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -239,7 +239,7 @@ public class SkillLogCommentService {
 
 //        파일 삭제 (댓글, 답글)
         commentFiles.forEach(fileDTO -> {
-            String rootPath = "C:/file/";
+            String rootPath = "home/ubuntu/upload//";
 
             File file = new File(rootPath + fileDTO.getFilePath(), fileDTO.getFileName());
             if (file.exists()) {
@@ -267,7 +267,7 @@ public class SkillLogCommentService {
 //        skillLogCommentDAO.deleteParentCommentsBySkillLogId(id);
 //
 //        files.forEach(fileDTO -> {
-//            String rootPath = "C:/file/";
+//            String rootPath = "home/ubuntu/upload//";
 //
 //            File file = new File(rootPath + fileDTO.getFilePath(), fileDTO.getFileName());
 //            if (file.exists()) {

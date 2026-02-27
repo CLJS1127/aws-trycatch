@@ -7,10 +7,12 @@ import com.app.trycatch.domain.member.MemberVO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-@Getter @Setter @ToString
-@EqualsAndHashCode(of="id")
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-public class MemberDTO{
+public class MemberDTO {
     private Long id;
     private String memberId;
     private String memberPassword;

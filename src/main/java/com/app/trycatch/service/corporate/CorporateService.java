@@ -154,7 +154,7 @@ public class CorporateService {
 
         // 파일 저장
         String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String rootPath = "C:/file/";
+        String rootPath = "/home/ubuntu/upload";
         String path = rootPath + todayPath;
 
         String uuid = UUID.randomUUID().toString();
@@ -290,7 +290,7 @@ public class CorporateService {
         // 파일이 있으면 저장
         if (files != null && !files.isEmpty()) {
             String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-            String rootPath = "C:/file/";
+            String rootPath = "/home/ubuntu/upload";
             String path = rootPath + todayPath;
 
             for (MultipartFile file : files) {
@@ -377,7 +377,7 @@ public class CorporateService {
         // 새 파일 저장
         if (files != null && !files.isEmpty()) {
             String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-            String rootPath = "C:/file/";
+            String rootPath = "/home/ubuntu/upload";
             String path = rootPath + todayPath;
 
             for (MultipartFile file : files) {
