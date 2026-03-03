@@ -133,7 +133,7 @@
         select individual_member_id from tbl_qna where id = #{id}
     </select>
 
-    <select id="selectCorpByKeyword" >
+    <select id="selectCorpByKeyword" resultType="CorpNameKeywordDTO">
         select id as corpId, corp_company_name as corpName
         from tbl_corp
         where corp_company_name like concat('%', #{keyword}, '%')

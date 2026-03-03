@@ -17,15 +17,15 @@ create table tbl_member
     constraint fk_member_profile_file foreign key (member_profile_file_id) references tbl_file (id)
 ) comment '회원 슈퍼타입';
 
--- 기존 테이블에 컬럼 추가 시
-alter table tbl_member add column member_profile_file_id bigint unsigned null comment '프로필 사진 파일 ID (tbl_file.id)';
-alter table tbl_member add constraint fk_member_profile_file foreign key (member_profile_file_id) references tbl_file (id);
+-- 기존 테이블에 컬럼 추가 시 (이미 CREATE TABLE에 포함되어 있으므로 별도 실행 불필요)
+-- alter table tbl_member add column member_profile_file_id bigint unsigned null comment '프로필 사진 파일 ID (tbl_file.id)';
+-- alter table tbl_member add constraint fk_member_profile_file foreign key (member_profile_file_id) references tbl_file (id);
 
-select * from tbl_member;
-delete from tbl_member;
-select * from tbl_individual_member;
-set FOREIGN_KEY_CHECKS = 1;
-drop table tbl_member;
+-- select * from tbl_member;
+-- delete from tbl_member;
+-- select * from tbl_individual_member;
+-- set FOREIGN_KEY_CHECKS = 1;
+-- drop table tbl_member;
 
 
 

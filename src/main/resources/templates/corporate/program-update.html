@@ -319,7 +319,7 @@
                                         <div class="photo-preview-list" id="photoPreviewList">
                                             <!-- 기존 등록된 사진 표시 -->
                                             <div th:each="file : ${program.experienceProgramFiles}" class="photo-preview-item existing-photo" th:data-file-id="${file.id}">
-                                                <img th:src="@{'/file/' + ${file.filePath} + '/' + ${file.fileName}}" alt="기존 사진">
+                                                <img th:src="@{/api/files/display(filePath=${file.filePath}, fileName=${file.fileName})}" alt="기존 사진">
                                                 <button type="button" class="photo-remove-btn existing-photo-remove" th:data-file-id="${file.id}">&times;</button>
                                             </div>
                                         </div>

@@ -231,7 +231,7 @@ passwordInputHideButton.addEventListener("click", (e) => {
 });
 
 phoneInput.addEventListener("input", (e) => {
-    phoneInput.value > 11 && (phoneInput.value = phoneInput.value.slice(0, 11));
+    phoneInput.value.length > 11 && (phoneInput.value = phoneInput.value.slice(0, 11));
     phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
 });
 

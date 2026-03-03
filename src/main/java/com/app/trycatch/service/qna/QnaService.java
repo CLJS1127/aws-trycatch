@@ -51,7 +51,7 @@ public class QnaService {
             fileDTO.setFileOriginalName(file.getOriginalFilename());
             fileDTO.setFileSize(String.valueOf(file.getSize()));
             fileDTO.setFileContentType(
-                file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
+                file.getContentType() != null && file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
             );
             fileDAO.save(fileDTO);
             qnaFileDAO.save(fileDTO.getId(), qnaVO.getId());
@@ -59,7 +59,7 @@ public class QnaService {
                 qnaMapper.updateFileId(qnaVO.getId(), fileDTO.getId());
                 firstFile = false;
             }
-            File dir = new File("home/ubuntu/upload//" + todayPath);
+            File dir = new File("/home/ubuntu/upload/" + todayPath);
             if (!dir.exists()) dir.mkdirs();
             try {
                 file.transferTo(new File(dir, fileDTO.getFileName()));
@@ -142,11 +142,11 @@ public class QnaService {
             fileDTO.setFileOriginalName(file.getOriginalFilename());
             fileDTO.setFileSize(String.valueOf(file.getSize()));
             fileDTO.setFileContentType(
-                file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
+                file.getContentType() != null && file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
             );
             fileDAO.save(fileDTO);
             qnaFileDAO.save(fileDTO.getId(), qnaVO.getId());
-            File dir = new File("home/ubuntu/upload//" + todayPath);
+            File dir = new File("/home/ubuntu/upload/" + todayPath);
             if (!dir.exists()) dir.mkdirs();
             try {
                 file.transferTo(new File(dir, fileDTO.getFileName()));

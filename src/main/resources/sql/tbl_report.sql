@@ -9,7 +9,7 @@ create table tbl_report
     report_processed_at   datetime null comment '처리 완료일',
     created_datetime      datetime default current_timestamp,
     updated_datetime      datetime default current_timestamp,
-    constraint fk_report_member foreign key (member_id) references tbl_individual_member (id)
+    constraint fk_report_member foreign key (member_id) references tbl_individual_member (id) on delete cascade
 ) comment '리포트 슈퍼타입';
 
 

@@ -21,4 +21,5 @@ public class MemberVO extends Period {
     private Status memberStatus;
     private boolean memberAgreePrivacy;
     private boolean memberAgreeMarketing;
+    private Long memberProfileFileId;
 }

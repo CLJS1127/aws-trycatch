@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.trycatch.mapper.qna.QnaCommentLikesMapper">
-    <insert id="insert">
-        insert into tbl_qna_comment_likes(id, fk_member_id)
-        values(#{id}, #{fkMemberId})
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_qna_comment_likes(qna_comment_id, member_id)
+        values(#{qnaCommentId}, #{memberId})
     </insert>
 
     <delete id="delete">
@@ -11,7 +11,7 @@
     </delete>
 
     <select id="countByCommentId" resultType="int">
-        select count(*) from tbl_qna_comment_likes where id = #{commentId}
+        select count(*) from tbl_qna_comment_likes where qna_comment_id = #{commentId}
     </select>
 
 </mapper>

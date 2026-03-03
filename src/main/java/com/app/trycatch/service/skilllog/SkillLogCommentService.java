@@ -48,7 +48,7 @@ public class SkillLogCommentService {
 
     //    추가
     public void write(SkillLogCommentDTO skillLogCommentDTO, MultipartFile multipartFile){
-        String rootPath = "home/ubuntu/upload//";
+        String rootPath = "/home/ubuntu/upload/";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -89,7 +89,7 @@ public class SkillLogCommentService {
             fileDTO.setFileSize(String.valueOf(multipartFile.getSize()));
             fileDTO.setFileOriginalName(multipartFile.getOriginalFilename());
             fileDTO.setFileName(uuid.toString() + "_" + multipartFile.getOriginalFilename());
-            fileDTO.setFileContentType(multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
+            fileDTO.setFileContentType(multipartFile.getContentType() != null && multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
             fileDAO.save(fileDTO);
 
             skillLogCommentFileDTO.setId(fileDTO.getId());
@@ -112,7 +112,7 @@ public class SkillLogCommentService {
     public SkillLogCommentWithPagingDTO getListInSkillLog(int page, Long id, Long memberId){
         SkillLogCommentWithPagingDTO skillLogCommentWithPagingDTO = new SkillLogCommentWithPagingDTO();
         int totalCount = skillLogCommentDAO.findCountAllBySkillLogId(id);
-        Criteria criteria = new Criteria(page, skillLogCommentDAO.findCountAllBySkillLogId(id));
+        Criteria criteria = new Criteria(page, totalCount);
         List<SkillLogCommentDTO> comments = skillLogCommentDAO.findAllBySkillLogId(criteria, id);
         SkillLogCommentLikesDTO skillLogCommentLikesDTO = new SkillLogCommentLikesDTO();
 
@@ -157,7 +157,6 @@ public class SkillLogCommentService {
             comment.setCreatedDatetime(formattedDate);
         });
 
-        skillLogNestedCommentWithPagingDTO.setCriteria(criteria);
         skillLogNestedCommentWithPagingDTO.setSkillLogNestedComments(nestedComments);
 
         return skillLogNestedCommentWithPagingDTO;
@@ -165,7 +164,7 @@ public class SkillLogCommentService {
 
     //    수정
     public void update(SkillLogCommentDTO skillLogCommentDTO, MultipartFile multipartFile){
-        String rootPath = "home/ubuntu/upload//";
+        String rootPath = "/home/ubuntu/upload/";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -180,7 +179,7 @@ public class SkillLogCommentService {
             fileDTO.setFileSize(String.valueOf(multipartFile.getSize()));
             fileDTO.setFileOriginalName(multipartFile.getOriginalFilename());
             fileDTO.setFileName(uuid.toString() + "_" + multipartFile.getOriginalFilename());
-            fileDTO.setFileContentType(multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
+            fileDTO.setFileContentType(multipartFile.getContentType() != null && multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
             fileDAO.save(fileDTO);
 
             skillLogCommentFileDTO.setId(fileDTO.getId());
@@ -239,7 +238,7 @@ public class SkillLogCommentService {
 
 //        파일 삭제 (댓글, 답글)
         commentFiles.forEach(fileDTO -> {
-            String rootPath = "home/ubuntu/upload//";
+            String rootPath = "/home/ubuntu/upload/";
 
             File file = new File(rootPath + fileDTO.getFilePath(), fileDTO.getFileName());
             if (file.exists()) {
@@ -267,7 +266,7 @@ public class SkillLogCommentService {
 //        skillLogCommentDAO.deleteParentCommentsBySkillLogId(id);
 //
 //        files.forEach(fileDTO -> {
-//            String rootPath = "home/ubuntu/upload//";
+//            String rootPath = "/home/ubuntu/upload/";
 //
 //            File file = new File(rootPath + fileDTO.getFilePath(), fileDTO.getFileName());
 //            if (file.exists()) {

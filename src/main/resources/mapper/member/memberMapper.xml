@@ -35,8 +35,8 @@
 
     <update id="updateAddressIdById">
         update tbl_member
-        set address_id = #{id}
-        where id = #{id}
+        set address_id = #{addressId}
+        where id = #{memberId}
     </update>
 
     <update id="update">

@@ -59,6 +59,6 @@ public class CorpService {
         AddressVO addressVO = corpMemberDTO.toAddressVO();
         addressDAO.save(addressVO);
 
-        memberDAO.updateAddressIdById(memberVO.getId());
+        memberDAO.updateAddressIdById(memberVO.getId(), addressVO.getId());
     }
 }

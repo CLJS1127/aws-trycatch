@@ -35,10 +35,11 @@
         from tbl_member m join tbl_individual_member im
         on m.id = im.id
         left join tbl_skill_log s
-        on m.id = s.member_id
+        on m.id = s.member_id and s.skill_log_status = 'published'
         left join tbl_qna q
         on m.id = q.individual_member_id
-        where m.id = #{id} and s.skill_log_status = 'published'
+        where m.id = #{id}
+        group by m.id, m.member_name, im.individual_member_level, im.individual_member_point
     </select>
 
     <select id="selectDashboardByMemberId" resultType="skillLogDashboardDTO">
@@ -57,7 +58,7 @@
         where m.id = #{id};
     </select>
 
-    <select id="selectAll">
+    <select id="selectAll" resultType="SkillLogDTO">
         select
             distinct
             m.member_name, s.id, s.member_id, s.experience_program_id, s.skill_log_title, s.skill_log_content,
@@ -82,7 +83,7 @@
         limit #{criteria.count} offset #{criteria.offset}
     </select>
 
-    <select id="selectTotal">
+    <select id="selectTotal" resultType="int">
         select count(distinct s.id)
         from tbl_skill_log s
         left outer join tbl_tag t
@@ -92,7 +93,7 @@
         </where>
     </select>
 
-    <select id="selectLatest">
+    <select id="selectLatest" resultType="SkillLogDTO">
         select
             s.id, s.skill_log_title, s.created_datetime
         from tbl_skill_log s
@@ -101,7 +102,7 @@
         limit #{limit}
     </select>
 
-    <select id="selectAllByMemberId">
+    <select id="selectAllByMemberId" resultType="SkillLogDTO">
         select
         distinct
         m.member_name, s.id, s.member_id, s.experience_program_id, s.skill_log_title, s.skill_log_content,
@@ -123,13 +124,13 @@
         </if>
         limit #{criteria.count} offset #{criteria.offset}
     </select>
-    <select id="selectTotalByMemberId">
+    <select id="selectTotalByMemberId" resultType="int">
         select count(id)
         from tbl_skill_log
         where member_id = #{memberId} and skill_log_status = 'published'
     </select>
 
-    <select id="selectById">
+    <select id="selectById" resultType="SkillLogDTO">
         select
             m.member_name, s.id, s.member_id, s.experience_program_id, s.skill_log_title, s.skill_log_content,
             s.skill_log_view_count, s.skill_log_status, s.created_datetime, s.updated_datetime,

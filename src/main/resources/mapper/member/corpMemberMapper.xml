@@ -48,6 +48,7 @@
                a.address_zipcode, a.address_address, a.address_detail,
                m.created_datetime, m.updated_datetime,
                lf.file_path AS logo_file_path, lf.file_name AS logo_file_name,
+               (ctm.id IS NOT NULL) AS team_member,
                COALESCE(ctm.corp_id, m.id) AS corp_id
         FROM tbl_member m
         JOIN tbl_corp c ON m.id = c.id

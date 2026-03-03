@@ -6,7 +6,7 @@
         values (#{skillLogId}, #{memberId}, #{skillLogCommentParentId}, #{skillLogCommentContent})
     </insert>
 
-    <select id="selectAllBySkillLogId">
+    <select id="selectAllBySkillLogId" resultType="SkillLogCommentDTO">
         select
             m.member_name, im.individual_member_level,
             c.id, c.skill_log_id, c.member_id, c.skill_log_comment_parent_id, c.skill_log_comment_content,
@@ -25,16 +25,16 @@
         on f.id = cf.id
         where c.skill_log_id = #{id} and c.skill_log_comment_parent_id is null
         order by c.created_datetime desc
-        limit #{criteria.rowCount} offset #{criteria.offset}
+        limit #{criteria.count} offset #{criteria.offset}
     </select>
-    <select id="selectCountAllBySkillLogId">
+    <select id="selectCountAllBySkillLogId" resultType="int">
         select count(*) from tbl_skill_log_comment c
         join tbl_member m on m.id = c.member_id
         join tbl_individual_member im on m.id = im.id
         where c.skill_log_id = #{id} and c.skill_log_comment_parent_id is null
     </select>
 
-    <select id="selectAllByCommentParentIdAndSkillLogId">
+    <select id="selectAllByCommentParentIdAndSkillLogId" resultType="SkillLogCommentDTO">
         select
             m.member_name, im.individual_member_level,
             c.id, c.skill_log_id, c.member_id, c.skill_log_comment_parent_id, c.skill_log_comment_content,
@@ -49,11 +49,11 @@
         on cf.skill_log_comment_id = c.id
         left join tbl_file f
         on f.id = cf.id
-        where c.skill_log_id = #{skillLogId} and skill_log_comment_parent_id = #{commentParentId}
+        where c.skill_log_id = #{skillLogId} and c.skill_log_comment_parent_id = #{commentParentId}
         order by c.id desc
         limit #{criteria.count} offset #{criteria.offset}
     </select>
-    <select id="selectCountAllByCommentParentIdAndSkillLogId">
+    <select id="selectCountAllByCommentParentIdAndSkillLogId" resultType="int">
         select count(*) from tbl_skill_log_comment c
         join tbl_member m on m.id = c.member_id
         join tbl_individual_member im on m.id = im.id
@@ -71,11 +71,6 @@
     <delete id="delete">
         delete from tbl_skill_log_comment
         where id = #{id}
-    </delete>
-
-    <delete id="deleteAllBySkillLogId">
-        delete from tbl_skill_log_comment
-        where skill_log_id = #{id}
     </delete>
 
     <delete id="deleteAllByCommentParentId">

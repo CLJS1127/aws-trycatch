@@ -21,12 +21,13 @@ public class FileController {
     @ResponseBody
     @GetMapping("/api/files/display")
     public byte[] display(String filePath, String fileName) throws IOException {
-        return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/upload" + filePath, fileName));
+        if (filePath == null || fileName == null) return new byte[0];
+        return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/upload/" + filePath, fileName));
     }
 
     @GetMapping("/file/download")
     public ResponseEntity<Resource> download(String fileName) throws UnsupportedEncodingException {
-        Resource resource = new FileSystemResource("/home/ubuntu/upload" + fileName);
+        Resource resource = new FileSystemResource("/home/ubuntu/upload/" + fileName);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment;filename=try_catch" + new String(fileName.substring(fileName.indexOf("_") + 1).getBytes("UTF-8"), "ISO-8859-1"));
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);

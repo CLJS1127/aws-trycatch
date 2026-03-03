@@ -4,8 +4,8 @@ create table tbl_qna_likes
     member_id bigint unsigned not null comment '좋아요 누른 회원 ID',
     qna_id               bigint unsigned not null comment 'QnA ID',
     created_datetime     datetime default current_timestamp,
-    constraint fk_qna_likes_member foreign key (member_id) references tbl_individual_member (id),
-    constraint fk_qna_likes_qna foreign key (qna_id) references tbl_qna (id),
+    constraint fk_qna_likes_member foreign key (member_id) references tbl_individual_member (id) on delete cascade,
+    constraint fk_qna_likes_qna foreign key (qna_id) references tbl_qna (id) on delete cascade,
     unique key uk_member_qna (member_id, qna_id)
 ) comment 'QnA 좋아요';
 

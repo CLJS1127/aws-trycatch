@@ -6,6 +6,7 @@ import com.app.trycatch.dto.member.CorpMemberDTO;
 import com.app.trycatch.dto.member.IndividualMemberDTO;
 import com.app.trycatch.dto.member.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public interface MemberMapper {
     public void insertCorp(MemberVO memberVO);
 
     //      주소 id 추가
-    public void updateAddressIdById(Long id);
+    public void updateAddressIdById(@Param("memberId") Long memberId, @Param("addressId") Long addressId);
 
     //    회원 정보 수정
     public void update(MemberVO memberVO);

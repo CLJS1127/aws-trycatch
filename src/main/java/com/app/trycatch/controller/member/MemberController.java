@@ -150,13 +150,21 @@ public class MemberController {
 
     @PostMapping("corp-log-in")
     public RedirectView corpLogin(MemberDTO memberDTO, @RequestParam(value = "re_url", defaultValue = "/corporate/home") String reUrl) {
-        session.setAttribute("member", corpService.login(memberDTO));
+        try {
+            session.setAttribute("member", corpService.login(memberDTO));
+        } catch (Exception e) {
+            return new RedirectView("/main/log-in?error=true");
+        }
         return new RedirectView(reUrl);
     }
 
     @PostMapping("log-in")
     public RedirectView login(MemberDTO memberDTO, @RequestParam(value = "re_url", defaultValue = "/qna/list") String reUrl, HttpServletResponse response) {
-        session.setAttribute("member", individualMemberService.login(memberDTO));
+        try {
+            session.setAttribute("member", individualMemberService.login(memberDTO));
+        } catch (Exception e) {
+            return new RedirectView("/main/log-in?error=true");
+        }
 
         Cookie rememberMemberIdCookie = new Cookie("remember-member-id", memberDTO.getMemberId());
         Cookie rememberCookie = new Cookie("remember", String.valueOf(memberDTO.isRemember()));

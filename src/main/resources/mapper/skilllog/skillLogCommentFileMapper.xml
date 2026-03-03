@@ -29,7 +29,7 @@
         where c.skill_log_comment_parent_id = #{id}
     </select>
 
-    <select id="selectFileIdBySkillLogCommentId">
+    <select id="selectFileIdBySkillLogCommentId" resultType="Long">
         select
             f.id
         from tbl_skill_log_comment_file cf

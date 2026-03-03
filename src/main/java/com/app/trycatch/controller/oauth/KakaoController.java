@@ -22,16 +22,17 @@ public class KakaoController {
     @GetMapping("/kakao/login")
     public RedirectView kakaoLogin(String code, RedirectAttributes redirectAttributes) {
         IndividualMemberDTO memberDTO = kakaoService.kakaoLogin(code);
-        String path = null;
+
+        if (memberDTO == null) {
+            return new RedirectView("/main/log-in?error=true");
+        }
 
         if (memberDTO.getId() == null) {
             redirectAttributes.addFlashAttribute("kakao", memberDTO);
-            path = "/member/kakao/join";
-        } else {
-            session.setAttribute("member", memberDTO);
-            path = "/qna/list";
+            return new RedirectView("/main/kakao-join");
         }
 
-        return new RedirectView(path);
+        session.setAttribute("member", memberDTO);
+        return new RedirectView("/qna/list");
     }
 }

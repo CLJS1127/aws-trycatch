@@ -106,9 +106,8 @@ public class CorporateService {
             addressDAO.update(dto.toAddressVO());
         } else if (dto.getAddressZipcode() != null && !dto.getAddressZipcode().isEmpty()) {
             // 주소가 없는데 새로 입력했으면 INSERT + member 업데이트
-            dto.setAddressId(dto.getId());
             addressDAO.save(dto.toAddressVO());
-            memberDAO.updateAddressIdById(dto.getId());
+            memberDAO.updateAddressIdById(dto.getId(), dto.toAddressVO().getId());
         }
 
         // 복리후생 저장 (delete-all + re-insert)
@@ -154,7 +153,7 @@ public class CorporateService {
 
         // 파일 저장
         String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        String rootPath = "/home/ubuntu/upload";
+        String rootPath = "/home/ubuntu/upload/";
         String path = rootPath + todayPath;
 
         String uuid = UUID.randomUUID().toString();
@@ -290,7 +289,7 @@ public class CorporateService {
         // 파일이 있으면 저장
         if (files != null && !files.isEmpty()) {
             String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-            String rootPath = "/home/ubuntu/upload";
+            String rootPath = "/home/ubuntu/upload/";
             String path = rootPath + todayPath;
 
             for (MultipartFile file : files) {
@@ -377,7 +376,7 @@ public class CorporateService {
         // 새 파일 저장
         if (files != null && !files.isEmpty()) {
             String todayPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-            String rootPath = "/home/ubuntu/upload";
+            String rootPath = "/home/ubuntu/upload/";
             String path = rootPath + todayPath;
 
             for (MultipartFile file : files) {

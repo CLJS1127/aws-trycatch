@@ -67,7 +67,9 @@ public class CorporateController {
     /** 팀원이면 대표의 corp_id, 대표이면 자기 id 반환 */
     private Long getCorpId() {
         Object member = session.getAttribute("member");
-        if (member instanceof CorpMemberDTO dto) return dto.getCorpId();
+        if (member instanceof CorpMemberDTO dto) {
+            return dto.getCorpId() != null ? dto.getCorpId() : dto.getId();
+        }
         return getMemberId();
     }
 
@@ -181,7 +183,7 @@ public class CorporateController {
         if (notCorpMember()) return ResponseEntity.status(403).body(Map.of("success", false, "message", "권한이 없습니다."));
         if (isTeamMember()) return ResponseEntity.status(403).body(Map.of("success", false, "message", "팀원은 접근할 수 없습니다."));
         try {
-            corporateService.inviteTeamMember(getMemberId(), invitation_mail);
+            corporateService.inviteTeamMember(getCorpId(), invitation_mail);
             return ResponseEntity.ok(Map.of("success", true, "message", "팀원 초대가 완료되었습니다."));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
@@ -227,7 +229,12 @@ public class CorporateController {
         if (notLoggedIn()) return LOGIN_REDIRECT;
         if (notCorpMember()) return MAIN_REDIRECT;
         Long corpId = getCorpId();
-        ExperienceProgramDTO program = corporateService.getProgramDetail(id);
+        ExperienceProgramDTO program;
+        try {
+            program = corporateService.getProgramDetail(id);
+        } catch (IllegalArgumentException e) {
+            return MAIN_REDIRECT;
+        }
         if (program == null || !program.getCorpId().equals(corpId)) return MAIN_REDIRECT;
         model.addAttribute("program", program);
         model.addAttribute("programAddress", corporateService.getProgramAddress(id));

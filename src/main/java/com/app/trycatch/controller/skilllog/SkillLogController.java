@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/skill-log/**")
+@RequestMapping("/skill-log")
 @RequiredArgsConstructor
 @Slf4j
 public class SkillLogController {
@@ -49,8 +49,8 @@ public class SkillLogController {
 
     @PostMapping("write")
     public RedirectView write(SkillLogDTO skillLogDTO,
-                      @RequestParam("file") ArrayList<MultipartFile> multipartFiles ) {
-        skillLogService.write(skillLogDTO, multipartFiles);
+                      @RequestParam(value = "file", required = false) ArrayList<MultipartFile> multipartFiles ) {
+        skillLogService.write(skillLogDTO, multipartFiles != null ? multipartFiles : new ArrayList<>());
 
         return new RedirectView("/skill-log/detail?id=" + skillLogDTO.getId());
     }
@@ -81,6 +81,8 @@ public class SkillLogController {
         } else if(member instanceof MemberDTO) {
             memberId = ((MemberDTO) member).getId();
         }
+
+        if (memberId == null) return "redirect:/main/log-in";
 
         model.addAttribute("aside", individualMemberService.findById(memberId));
 //        model.addAttribute("aside", skillLogService.aside(memberId));
@@ -123,13 +125,13 @@ public class SkillLogController {
 
     @PostMapping("update")
     public RedirectView update(SkillLogDTO skillLogDTO,
-                              @RequestParam("file") ArrayList<MultipartFile> multipartFiles ) {
-        skillLogService.update(skillLogDTO, multipartFiles);
+                              @RequestParam(value = "file", required = false) ArrayList<MultipartFile> multipartFiles ) {
+        skillLogService.update(skillLogDTO, multipartFiles != null ? multipartFiles : new ArrayList<>());
 
         return new RedirectView("/skill-log/detail?id=" + skillLogDTO.getId());
     }
 
-    @GetMapping("delete")
+    @PostMapping("delete")
     public RedirectView delete(Long id) {
         skillLogService.delete(id);
         return new RedirectView("/skill-log/list");

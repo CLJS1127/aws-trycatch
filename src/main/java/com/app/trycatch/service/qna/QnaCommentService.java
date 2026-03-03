@@ -14,6 +14,7 @@ import com.app.trycatch.service.Alarm.CorporateAlramService;
 import com.app.trycatch.service.Alarm.IndividualAlramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Exception.class)
 public class QnaCommentService {
     private final QnaCommentDAO qnaCommentDAO;
     private final FileDAO fileDAO;
@@ -94,7 +96,7 @@ public class QnaCommentService {
             fileDTO.setFileOriginalName(file.getOriginalFilename());
             fileDTO.setFileSize(String.valueOf(file.getSize()));
             fileDTO.setFileContentType(
-                    file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
+                    file.getContentType() != null && file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
             );
             fileDAO.save(fileDTO);
             qnaCommentFileDAO.save(fileDTO.getId(), vo.getId());
@@ -170,7 +172,7 @@ public class QnaCommentService {
             fileDTO.setFileOriginalName(file.getOriginalFilename());
             fileDTO.setFileSize(String.valueOf(file.getSize()));
             fileDTO.setFileContentType(
-                    file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
+                    file.getContentType() != null && file.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER
             );
             fileDAO.save(fileDTO);
             qnaCommentFileDAO.save(fileDTO.getId(), id);

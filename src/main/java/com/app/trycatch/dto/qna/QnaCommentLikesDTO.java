@@ -19,6 +19,7 @@ public class QnaCommentLikesDTO {
     private Long qnaCommentParent;
     private String qnaCommentContent;
     private int qnaCommentLikeCount;
+    private Long qnaCommentId;
     private Long fkMemberId;
     private String memberId;
     private String memberPassword;
@@ -36,7 +37,8 @@ public class QnaCommentLikesDTO {
     public QnaCommentLikesVO toQnaCommentLikesVO() {
         return QnaCommentLikesVO.builder()
                 .id(id)
-                .fkMemberId(fkMemberId)
+                .qnaCommentId(qnaCommentId)
+                .memberId(fkMemberId)
                 .build();
     }
 

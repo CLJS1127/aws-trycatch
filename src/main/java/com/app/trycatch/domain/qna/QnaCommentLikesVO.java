@@ -11,5 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class QnaCommentLikesVO {
     private Long id;
-    private Long fkMemberId;
+    private Long qnaCommentId;
+    private Long memberId;
 }

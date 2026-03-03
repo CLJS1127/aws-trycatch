@@ -134,11 +134,15 @@ public class KakaoService {
 //                내가 필요한 정보를 쏙쏙 가져온다.
                 JsonElement jsonElement = JsonParser.parseString(result);
                 JsonObject kakaoAccount = jsonElement.getAsJsonObject().get("kakao_account").getAsJsonObject();
-                JsonElement profile = kakaoAccount.getAsJsonObject().get("profile");
+                JsonElement profileElement = kakaoAccount.get("profile");
+                JsonObject profile = (profileElement != null && !profileElement.isJsonNull()) ? profileElement.getAsJsonObject() : null;
 
-                String memberEmail = kakaoAccount.getAsJsonObject().get("email").getAsString();
-                String profileImageUrl = profile.getAsJsonObject().get("profile_image_url").getAsString();
-                String memberName = profile.getAsJsonObject().get("nickname").getAsString();
+                JsonElement emailElement = kakaoAccount.get("email");
+                String memberEmail = (emailElement != null && !emailElement.isJsonNull()) ? emailElement.getAsString() : null;
+                String profileImageUrl = (profile != null && profile.has("profile_image_url") && !profile.get("profile_image_url").isJsonNull())
+                        ? profile.get("profile_image_url").getAsString() : null;
+                String memberName = (profile != null && profile.has("nickname") && !profile.get("nickname").isJsonNull())
+                        ? profile.get("nickname").getAsString() : null;
 
                 kakaoInfo = new IndividualMemberDTO();
                 kakaoInfo.setMemberName(memberName);
@@ -175,6 +179,6 @@ public class KakaoService {
             throw new RuntimeException(e);
         }
 
-        return null;
+        return new IndividualMemberDTO();
     }
 }

@@ -44,8 +44,8 @@ public class MemberDAO {
     }
 
     // 주소 id 추가
-    public void updateAddressIdById(Long id) {
-        memberMapper.updateAddressIdById(id);
+    public void updateAddressIdById(Long memberId, Long addressId) {
+        memberMapper.updateAddressIdById(memberId, addressId);
     }
 
     // 회원 정보 수정

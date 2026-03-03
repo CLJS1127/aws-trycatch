@@ -55,7 +55,7 @@ public class SkillLogService {
 
 //    작성
     public void write(SkillLogDTO skillLogDTO, List<MultipartFile> multipartFiles) {
-        String rootPath = "home/ubuntu/upload//";
+        String rootPath = "/home/ubuntu/upload/";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -79,7 +79,7 @@ public class SkillLogService {
             fileDTO.setFileSize(String.valueOf(multipartFile.getSize()));
             fileDTO.setFileOriginalName(multipartFile.getOriginalFilename());
             fileDTO.setFileName(uuid.toString() + "_" + multipartFile.getOriginalFilename());
-            fileDTO.setFileContentType(multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
+            fileDTO.setFileContentType(multipartFile.getContentType() != null && multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
             fileDAO.save(fileDTO);
 
             skillLogFileDTO.setId(fileDTO.getId());
@@ -180,7 +180,7 @@ public class SkillLogService {
 
 //    조회
     public SkillLogDTO detail(Long id, Long memberId) {
-        Optional<SkillLogDTO> foundSkillLog = null;
+        Optional<SkillLogDTO> foundSkillLog = Optional.empty();
         SkillLogDTO skillLogDTO = null;
         SkillLogLikesDTO skillLogLikesDTO = new SkillLogLikesDTO();
 
@@ -223,7 +223,7 @@ public class SkillLogService {
 
 //    수정
     public void update(SkillLogDTO skillLogDTO, List<MultipartFile> multipartFiles) {
-        String rootPath = "home/ubuntu/upload//";
+        String rootPath = "/home/ubuntu/upload/";
         String todayPath = getTodayPath();
         String path = rootPath + todayPath;
 
@@ -247,7 +247,7 @@ public class SkillLogService {
             fileDTO.setFileSize(String.valueOf(multipartFile.getSize()));
             fileDTO.setFileOriginalName(multipartFile.getOriginalFilename());
             fileDTO.setFileName(uuid.toString() + "_" + multipartFile.getOriginalFilename());
-            fileDTO.setFileContentType(multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
+            fileDTO.setFileContentType(multipartFile.getContentType() != null && multipartFile.getContentType().contains("image") ? FileContentType.IMAGE : FileContentType.OTHER);
             fileDAO.save(fileDTO);
 
             skillLogFileDTO.setId(fileDTO.getId());
@@ -286,7 +286,7 @@ public class SkillLogService {
 
 //    삭제
     public void delete(Long id) {
-        String rootPath = "home/ubuntu/upload//";
+        String rootPath = "/home/ubuntu/upload/";
 
 //        태그 삭제
         tagDAO.findAllBySkillLogId(id).forEach((tagVO) -> {
