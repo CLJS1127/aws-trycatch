@@ -37,7 +37,7 @@ INSERT INTO tbl_experience_program (
     experience_program_job
 )
 SELECT
-    ELT(1 + MOD(n - 1, 3), 115,
+    ELT(1 + MOD(n - 1, 3), 1, 1, 1),
 
     CONCAT('[더미] ',
         ELT(1 + MOD(n - 1, 30),

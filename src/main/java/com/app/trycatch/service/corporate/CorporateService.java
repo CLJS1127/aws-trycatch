@@ -465,6 +465,7 @@ public class CorporateService {
         challengerDAO.setStatus(applyId, "step_failed");
 
         Long challengerId = challengerDAO.findIdByApplyId(applyId);
+        if (challengerId == null) return;
         FeedbackDTO feedbackDTO = new FeedbackDTO();
         feedbackDTO.setId(challengerId);
         feedbackDTO.setFeedbackContent(feedback);

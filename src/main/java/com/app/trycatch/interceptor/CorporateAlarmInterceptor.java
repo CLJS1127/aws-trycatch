@@ -21,7 +21,7 @@ public class CorporateAlarmInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        Long corpId = member.getId();
+        Long corpId = member.getCorpId() != null ? member.getCorpId() : member.getId();
         request.setAttribute("corpAlrams", corporateAlramService.list(corpId));
         request.setAttribute("hasUnreadCorpAlrams", corporateAlramService.hasUnread(corpId));
         return true;

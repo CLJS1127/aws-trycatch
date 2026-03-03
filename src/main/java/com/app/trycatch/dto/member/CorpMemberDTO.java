@@ -71,7 +71,7 @@ public class CorpMemberDTO {
 
     public CorpVO toCorpVO() {
         return CorpVO.builder()
-                .id(id)
+                .id(corpId != null ? corpId : id)
                 .corpCompanyName(corpCompanyName)
                 .corpBusinessNumber(corpBusinessNumber)
                 .corpCeoName(corpCeoName)

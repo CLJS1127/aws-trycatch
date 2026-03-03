@@ -119,7 +119,7 @@ public class CorporateController {
         if (notLoggedIn()) return LOGIN_REDIRECT;
         if (notCorpMember()) return MAIN_REDIRECT;
         if (isTeamMember()) return "redirect:/corporate/home";
-        Long corpId = getMemberId();
+        Long corpId = getCorpId();
         CorpMemberDTO corpInfo = corporateService.getCorpInfo(corpId);
         corpInfo.setWelfareList(corporateService.getWelfareByCorpId(corpId));
         model.addAttribute("corpInfo", corpInfo);
@@ -131,10 +131,11 @@ public class CorporateController {
     public String profileSave(CorpMemberDTO dto) {
         if (notCorpMember()) return MAIN_REDIRECT;
         if (isTeamMember()) return "redirect:/corporate/home";
-        Long corpId = getMemberId();
+        Long corpId = getCorpId();
         dto.setId(corpId);
         // addressId는 폼에 없으므로 기존 데이터에서 조회
         CorpMemberDTO existing = corporateService.getCorpInfo(corpId);
+        if (existing == null) return MAIN_REDIRECT;
         dto.setAddressId(existing.getAddressId());
         corporateService.updateCorpInfo(dto);
         return "redirect:/corporate/profile";
@@ -146,7 +147,7 @@ public class CorporateController {
     public String memberInfoForm(Model model) {
         if (notLoggedIn()) return LOGIN_REDIRECT;
         if (notCorpMember()) return MAIN_REDIRECT;
-        Long corpId = getMemberId();
+        Long corpId = getCorpId();
         model.addAttribute("corpInfo", corporateService.getCorpInfo(corpId));
         model.addAttribute("loginMember", session.getAttribute("member"));
         return "corporate/member-info";
@@ -167,7 +168,7 @@ public class CorporateController {
         if (notLoggedIn()) return LOGIN_REDIRECT;
         if (notCorpMember()) return MAIN_REDIRECT;
         if (isTeamMember()) return "redirect:/corporate/home";
-        Long corpId = getMemberId();
+        Long corpId = getCorpId();
         model.addAttribute("teamWithPaging", corporateService.getTeamMembers(corpId, page));
         model.addAttribute("corpInfo", corporateService.getCorpInfo(corpId));
         model.addAttribute("loginMember", session.getAttribute("member"));
@@ -227,7 +228,7 @@ public class CorporateController {
         if (notCorpMember()) return MAIN_REDIRECT;
         Long corpId = getCorpId();
         ExperienceProgramDTO program = corporateService.getProgramDetail(id);
-        if (!program.getCorpId().equals(corpId)) return MAIN_REDIRECT;
+        if (program == null || !program.getCorpId().equals(corpId)) return MAIN_REDIRECT;
         model.addAttribute("program", program);
         model.addAttribute("programAddress", corporateService.getProgramAddress(id));
         model.addAttribute("corpInfo", corporateService.getCorpInfo(corpId));

@@ -5,19 +5,6 @@
 
 SET foreign_key_checks = 0;
 
--- 기존 개인회원 ID 조회 (최대 5명 순환 사용)
-SET @member1 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1);
-SET @member2 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 1);
-SET @member3 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 2);
-SET @member4 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 3);
-SET @member5 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 4);
-
--- NULL이면 member1로 대체
-SET @member2 = IFNULL(@member2, @member1);
-SET @member3 = IFNULL(@member3, @member1);
-SET @member4 = IFNULL(@member4, @member1);
-SET @member5 = IFNULL(@member5, @member1);
-
 -- ============================================================
 -- 기존 더미 데이터 삭제 (재실행 시 중복 방지)
 -- ============================================================
@@ -40,7 +27,7 @@ INSERT INTO tbl_qna (
     created_datetime
 )
 SELECT
-    ELT(1 + MOD(n - 1, 5), @member1, @member2, @member3, @member4, @member5),
+    4,
 
     CONCAT('[더미] ',
         ELT(1 + MOD(n - 1, 40),

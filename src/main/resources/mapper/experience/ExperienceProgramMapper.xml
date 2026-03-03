@@ -120,7 +120,7 @@
           AND experience_program_deadline &lt; #{today}
     </update>
 
-    <!-- 체험 시작일 도달: 모집마감 → 진행중 -->
+    <!-- 체험 시작일 도달: 모집마감(closed) → 진행중(draft) -->
     <update id="startPrograms">
         UPDATE tbl_experience_program
         SET experience_program_status = 'draft'
@@ -129,7 +129,7 @@
           AND SUBSTRING_INDEX(experience_program_work_days, '~', 1) &lt;= #{today}
     </update>
 
-    <!-- 체험 종료일 다음날: 진행중 → 진행종료 -->
+    <!-- 체험 종료일 다음날: 진행중(draft) → 진행종료(cancelled) -->
     <update id="finishPrograms">
         UPDATE tbl_experience_program
         SET experience_program_status = 'cancelled'
@@ -170,7 +170,7 @@
             ep.experience_program_view_count, ep.experience_program_job, ep.created_datetime, ep.updated_datetime,
 
             ep.corp_id, co.corp_company_name, co.corp_kind_small_id, co.corp_company_type,
-            co.corp_business_number, co.corp_ceo_name, co.corp_kind_id, co.corp_kind_small_id,
+            co.corp_business_number, co.corp_ceo_name, co.corp_kind_id,
             co.corp_company_size, co.corp_establishment_date, co.corp_website_url, co.corp_fax, co.corp_capital,
             co.corp_total_sales, co.corp_performance, co.corp_vision
 

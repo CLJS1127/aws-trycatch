@@ -5,28 +5,6 @@
 
 SET foreign_key_checks = 0;
 
--- 기존 개인회원 ID 조회 (최대 5명 순환 사용)
-SET @member1 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1);
-SET @member2 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 1);
-SET @member3 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 2);
-SET @member4 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 3);
-SET @member5 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 4);
-
--- NULL이면 member1로 대체
-SET @member2 = IFNULL(@member2, @member1);
-SET @member3 = IFNULL(@member3, @member1);
-SET @member4 = IFNULL(@member4, @member1);
-SET @member5 = IFNULL(@member5, @member1);
-
--- 기존 체험 프로그램 ID 조회 (스킬로그에 연결할 용도)
-SET @ep1 = (SELECT id FROM tbl_experience_program ORDER BY id LIMIT 1);
-SET @ep2 = (SELECT id FROM tbl_experience_program ORDER BY id LIMIT 1 OFFSET 1);
-SET @ep3 = (SELECT id FROM tbl_experience_program ORDER BY id LIMIT 1 OFFSET 2);
-
-SET @ep1 = IFNULL(@ep1, NULL);
-SET @ep2 = IFNULL(@ep2, @ep1);
-SET @ep3 = IFNULL(@ep3, @ep1);
-
 -- ============================================================
 -- 기존 더미 데이터 삭제 (재실행 시 중복 방지)
 -- ============================================================
@@ -51,12 +29,9 @@ INSERT INTO tbl_skill_log (
     created_datetime
 )
 SELECT
-    ELT(1 + MOD(n - 1, 5), @member1, @member2, @member3, @member4, @member5),
+    4,
 
-    CASE
-        WHEN MOD(n, 4) = 0 THEN NULL
-        ELSE ELT(1 + MOD(n - 1, 3), @ep1, @ep2, @ep3)
-    END,
+    NULL,
 
     CONCAT('[더미] ',
         ELT(1 + MOD(n - 1, 40),
