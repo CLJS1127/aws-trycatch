@@ -1,0 +1,152 @@
+-- ============================================================
+-- QnA 더미데이터 120건
+-- 기존 개인회원(tbl_individual_member) ID를 순환 참조하여 생성
+-- ============================================================
+
+SET foreign_key_checks = 0;
+
+-- 기존 개인회원 ID 조회 (최대 5명 순환 사용)
+SET @member1 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1);
+SET @member2 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 1);
+SET @member3 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 2);
+SET @member4 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 3);
+SET @member5 = (SELECT id FROM tbl_individual_member ORDER BY id LIMIT 1 OFFSET 4);
+
+-- NULL이면 member1로 대체
+SET @member2 = IFNULL(@member2, @member1);
+SET @member3 = IFNULL(@member3, @member1);
+SET @member4 = IFNULL(@member4, @member1);
+SET @member5 = IFNULL(@member5, @member1);
+
+-- ============================================================
+-- 기존 더미 데이터 삭제 (재실행 시 중복 방지)
+-- ============================================================
+DELETE FROM tbl_qna
+WHERE qna_title LIKE '[더미]%';
+
+-- ============================================================
+-- QnA 120건 INSERT
+-- ============================================================
+INSERT INTO tbl_qna (
+    individual_member_id,
+    qna_title,
+    qna_content,
+    job_category_small_id,
+    job_category_name,
+    company_name,
+    college_friend,
+    qna_view_count,
+    qna_status,
+    created_datetime
+)
+SELECT
+    ELT(1 + MOD(n - 1, 5), @member1, @member2, @member3, @member4, @member5),
+
+    CONCAT('[더미] ',
+        ELT(1 + MOD(n - 1, 40),
+            '신입 백엔드 개발자 포트폴리오 조언 부탁드립니다',
+            '프론트엔드 vs 백엔드 어떤 걸 선택해야 할까요?',
+            'Spring Boot와 Node.js 중 어떤 게 취업에 유리할까요?',
+            '비전공자 개발자 취업 현실적으로 가능한가요?',
+            '코딩 테스트 준비 어떻게 하면 좋을까요?',
+            'IT 대기업 면접 팁 공유해주세요',
+            '개발자 자기소개서 작성법이 궁금합니다',
+            '인턴 경험 없이 신입 지원해도 될까요?',
+            'React vs Vue 뭘 배워야 할까요?',
+            'CS 기초 공부 순서 추천해주세요',
+            '네이버 신입 개발자 채용 과정이 궁금합니다',
+            '카카오 코딩테스트 난이도가 어떤가요?',
+            '스타트업 vs 대기업 첫 직장으로 어디가 좋을까요?',
+            '개발자 연봉 협상 팁 있을까요?',
+            '깃허브 프로필 관리 어떻게 하시나요?',
+            '졸업 후 공백기 면접에서 어떻게 설명할까요?',
+            'AWS 자격증 취업에 도움이 되나요?',
+            '데이터 엔지니어 전망이 어떨까요?',
+            'SQLD 자격증 공부법 추천 부탁드립니다',
+            '개발자 이직 시 주의할 점은 무엇인가요?',
+            'Docker 실무에서 많이 쓰나요?',
+            '주니어 개발자 성장 방법이 궁금합니다',
+            'SI 회사 경력이 이직에 도움이 될까요?',
+            'Java vs Python 첫 언어로 뭐가 좋을까요?',
+            '부트캠프 수료 후 취업 후기가 궁금합니다',
+            '모바일 개발 시장 전망은 어떤가요?',
+            'PM 직무 전환 어떻게 하면 될까요?',
+            '정보처리기사 실기 공부법 있을까요?',
+            '클라우드 엔지니어 되려면 뭘 준비해야 하나요?',
+            '프리랜서 개발자 장단점이 궁금합니다',
+            '알고리즘 공부 백준 vs 프로그래머스 뭐가 좋을까요?',
+            'UI/UX 디자이너에서 프론트엔드 전환 가능할까요?',
+            '해외 취업 준비 어떻게 시작해야 하나요?',
+            '개발자 번아웃 어떻게 극복하셨나요?',
+            '코딩 부트캠프 추천 부탁드립니다',
+            'Kotlin vs Java 안드로이드 개발 어떤 게 좋을까요?',
+            '테스트 코드 실무에서 어느 정도 작성하나요?',
+            '개발자 영어 공부 어떻게 하시나요?',
+            '첫 프로젝트 주제 추천해주세요',
+            'DBA 진로 전망이 궁금합니다'
+        ),
+        ' #', n
+    ),
+
+    CONCAT('<div class="qna-content"><p>',
+        ELT(1 + MOD(n - 1, 10),
+            '안녕하세요, 취업 준비 중인 대학생입니다. 현재 포트폴리오를 준비하고 있는데 어떤 프로젝트를 하면 좋을지 고민이 많습니다. 현직 개발자분들의 조언을 구합니다. 특히 백엔드 쪽으로 진로를 정했는데, Spring Boot로 REST API 프로젝트를 하는 것이 도움이 될까요?',
+            '컴퓨터공학과 3학년 재학 중입니다. 프론트엔드와 백엔드 중 하나를 선택해서 집중적으로 공부하려고 합니다. 각각의 장단점과 취업 시장에서의 수요가 어떤지 현직자분들의 의견을 듣고 싶습니다.',
+            '현재 취업 준비 중인데 기술 스택을 정하는 데 어려움을 겪고 있습니다. Spring Boot와 Node.js 둘 다 배워봤는데, 취업 시장에서 어떤 기술이 더 수요가 높은지 궁금합니다.',
+            '전공이 경영학인데 개발자로 전향하려고 합니다. 6개월 부트캠프를 수료하면 현실적으로 취업이 가능할까요? 비전공자 출신 개발자분들의 경험담을 듣고 싶습니다.',
+            '코딩 테스트 준비를 시작하려는데 어디서부터 시작해야 할지 모르겠습니다. 알고리즘 기초부터 탄탄히 해야 할지, 기출 문제를 많이 풀어야 할지 조언 부탁드립니다.',
+            'IT 대기업 면접을 앞두고 있습니다. 기술 면접과 인성 면접 각각 어떻게 준비하면 좋을지 선배님들의 경험을 공유해주시면 감사하겠습니다.',
+            '개발자 자기소개서를 처음 써보는데 어떤 내용을 중심으로 작성하면 좋을지 고민입니다. 프로젝트 경험 위주로 쓰면 될까요, 아니면 학업 성과도 중요할까요?',
+            '인턴 경험 없이 졸업 후 바로 신입으로 지원하려고 합니다. 인턴 경험이 없으면 불리할까요? 개인 프로젝트로 대체할 수 있을지 궁금합니다.',
+            'React와 Vue.js 중 하나를 선택해서 깊이 공부하려 합니다. 현재 취업 시장에서의 수요와 각 프레임워크의 장단점을 비교해주실 수 있을까요?',
+            'CS 기초(자료구조, 알고리즘, 운영체제, 네트워크, DB)를 공부하려는데 어떤 순서로 공부하면 효율적일까요? 추천하시는 교재나 강의도 있으면 알려주세요.'
+        ),
+    '</p></div>'),
+
+    NULL,
+
+    ELT(1 + MOD(n - 1, 10),
+        '백엔드 개발', '프론트엔드 개발', '풀스택 개발', '데이터 엔지니어', 'DevOps',
+        'AI/ML 엔지니어', '모바일 개발', 'QA 엔지니어', 'DBA', 'PM'
+    ),
+
+    ELT(1 + MOD(n - 1, 12),
+        '삼성전자', '네이버', '카카오', 'LG CNS', '쿠팡',
+        '토스', '배달의민족', '라인', 'SK텔레콤', 'NHN',
+        '넥슨', '현대오토에버'
+    ),
+
+    ELT(1 + MOD(n - 1, 6),
+        '서울대학교', '연세대학교', '고려대학교', '한양대학교', 'KAIST', NULL
+    ),
+
+    FLOOR(RAND(n) * 300),
+
+    'published',
+
+    DATE_SUB(NOW(), INTERVAL FLOOR(RAND(n) * 180) DAY)
+
+FROM (
+    SELECT a.N + b.N * 10 + 1 AS n
+    FROM (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+          UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) a,
+         (SELECT 0 AS N UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4
+          UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) b
+    HAVING n <= 120
+    ORDER BY n
+) nums;
+
+SET foreign_key_checks = 1;
+
+-- ============================================================
+-- 검증 쿼리
+-- ============================================================
+SELECT 'QnA 더미 데이터 건수' AS label, COUNT(*) AS cnt
+FROM tbl_qna
+WHERE qna_title LIKE '[더미]%';
+
+SELECT job_category_name, COUNT(*) AS cnt
+FROM tbl_qna
+WHERE qna_title LIKE '[더미]%'
+GROUP BY job_category_name
+ORDER BY cnt DESC;
